@@ -1,0 +1,27 @@
+.header{
+  font-size: 1.7em;
+}
+.header sub{
+  font-size: 0.6em;
+  color: #807b7b;
+}
+table,td,th{
+  border:0.5pt solid rgb(105, 103, 103);
+}
+td,th{
+  height: 5px !important;
+}
+th{
+  background-color: #ededed !important;
+}
+.mat-mdc-header-row{
+  height: 30px !important;
+  padding: 10px  !important;
+}
+.mdc-data-table__row{
+  height: 30px !important;
+  padding: 10px  !important;
+}
+.mdc-data-table__row:hover{
+  background-color: #ededed;
+}

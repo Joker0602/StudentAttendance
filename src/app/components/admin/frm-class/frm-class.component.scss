@@ -1,0 +1,39 @@
+.header{
+  font-size: 1.7em;
+}
+.header sub{
+  font-size: 0.6em;
+  color: #807b7b;
+}
+table,tr,td,th{
+  border:0.5pt solid rgb(105, 103, 103);
+}
+.table-responsive-lg{
+  width: 100%;
+}
+td,th{
+  height: 2px !important;
+  padding: 5px;
+}
+th{
+  background-color: #ededed !important;
+}
+.mat-mdc-header-row{
+  height: 30px !important;
+  padding: 10px  !important;
+}
+.mdc-data-table__row{
+  height: 30px !important;
+  padding: 10px  !important;
+}
+.mdc-data-table__row:hover{
+  background-color: #ededed;
+}
+.edit{
+  cursor: pointer;
+  color:blue
+}
+.delete{
+  cursor: pointer;
+  color:red
+}

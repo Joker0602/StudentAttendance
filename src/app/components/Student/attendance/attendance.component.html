@@ -1,0 +1,61 @@
+<div class="mt-2">
+  <h1 class="header">Attendance</h1>
+  <hr classs="my-0">
+
+  <div class="calendar">
+    <div class="calendar-header">
+      <a (click)="goToPrevMonth()"><i class="fa-solid fa-chevron-left"></i></a>
+      <span>{{ getMonthName() }} {{ getYear() }}</span>
+      <a (click)="goToNextMonth()"><i class="fa-solid fa-chevron-right"></i></a>
+    </div>
+
+    <div class="calendar-days-of-week">
+      <div class="day">Sun</div>
+      <div class="day">Mon</div>
+      <div class="day">Tue</div>
+      <div class="day">Wed</div>
+      <div class="day">Thu</div>
+      <div class="day">Fri</div>
+      <div class="day">Sat</div>
+    </div>
+
+    <div class="calendar-days">
+      <ng-container *ngFor="let day of monthDays">
+        <div class="day-box"
+        (click)="onclickDate(day)"
+        [attr.aria-disabled]="isGreaterThanCurrentDate(day,currentDate.getMonth(), currentDate.getFullYear()) ? 'true' : null"
+        [ngClass]="{
+          'empty': !day,
+          'disabled': isGreaterThanCurrentDate(day,currentDate.getMonth(), currentDate.getFullYear()),
+          'past': isBeforeCurrentDate(day,currentDate.getMonth(), currentDate.getFullYear()),
+          'highlighted': isHighlightedDate(day),
+          'greater': isGreaterThanCurrentDate(day,currentDate.getMonth(), currentDate.getFullYear())
+        }">
+     {{ day }}
+   </div>
+        <!-- <div *ngIf="checkPresenty(day); else elseTemplate">
+++++++++++++++++++++++++
+        <div class="day-box" (click)="onclickDate(day)"
+         [ngClass]="{'empty': !day, 'grater':isGreaterThanCurrentDate(day),'presenty':checkPresenty(day)
+
+         }">
+          {{ day }}
+        </div>
+        </div> -->
+
+        <!-- <ng-template #elseTemplate>
+          <div>
+-----------------
+          <div class="day-box" (click)="onclickDate(day)"
+           [ngClass]="{'empty': !day, 'disabled': selecteCurrentDate(day) !==
+           currentDates(currentDay),'grater':isGreaterThanCurrentDate(day)
+
+           }">
+            {{ day }}
+          </div>
+          </div>
+    </ng-template> -->
+      </ng-container>
+    </div>
+  </div>
+</div>

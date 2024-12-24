@@ -1,0 +1,85 @@
+<div class="container">
+  <!-- Mat Card Component -->
+  <mat-card class="card p-lg-4 my-4" appearance="outlined">
+    <mat-card-header  class=" justify-content-center bg-white card-header border-0 p-2">
+      <mat-card-title class="card-title px-2">
+        <i class="fa fa-user"></i>
+        <div>Student Registration</div>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="mt-3">
+      <form [formGroup]="studentForm" (submit)="Registration()">
+      <div class="row">
+        <div class="col-md-6">
+          <label for="txtname">Name</label>
+          <ng-container *ngIf="studentForm.get('Name')?.invalid && studentForm.get('Name')?.touched">
+            &nbsp;<span class="error" *ngIf="studentForm.get('Name')?.errors?.['required']">Name is required</span>
+          </ng-container>
+          <input type="text" formControlName="Name" class="form-control" id="txtname" name="txtName">
+        </div>
+        <div class="col-md-6">
+          <label for="contact">Contact</label>
+          <ng-container *ngIf="studentForm.get('Contact')?.invalid && studentForm.get('Contact')?.touched">
+            &nbsp;<span class="error" *ngIf="studentForm.get('Contact')?.errors?.['required']">Contact is required</span>
+          </ng-container>
+          <input type="text" formControlName="Contact" class="form-control" id="txtContact" name="txtContact">
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-6">
+          <label for="address">Address</label>
+          <ng-container *ngIf="studentForm.get('Address')?.invalid && studentForm.get('Address')?.touched">
+            &nbsp;<span class="error" *ngIf="studentForm.get('Address')?.errors?.['required']">Address is required</span>
+          </ng-container>
+        <input type="text" formControlName="Address" class="form-control" id="txtAddress" name="txtAddress">
+        </div>
+        <div class="col-md-6">
+          <label for="class">Standard</label>
+          <ng-container *ngIf="studentForm.get('ClassID')?.invalid && studentForm.get('ClassID')?.touched">
+            &nbsp;<span class="error" *ngIf="studentForm.get('ClassID')?.errors?.['required']">Division is required</span>
+          </ng-container>
+          <!-- <input type="text" class="form-control" id="txtname" name="txtName"> -->
+           <select name="" formControlName="ClassID" class="form-control select-control" id="">
+
+            <option value="0" selected>Select Standard</option>
+            <ng-container *ngFor="let item of classList">
+              <option [value]="item.Id">{{item.name}}</option>
+            </ng-container>
+           </select>
+        </div>
+      </div>
+      <div>
+        <label for="userName">User Name</label>
+        <ng-container *ngIf="studentForm.get('UserName')?.invalid && studentForm.get('UserName')?.touched">
+          &nbsp;<span class="error" *ngIf="studentForm.get('UserName')?.errors?.['required']">User Name is required</span>
+        </ng-container>
+        <input type="text" formControlName="UserName" class="form-control" id="txtUserName" name="txtUserName">
+      </div>
+
+      <div>
+          <label for="password">Password</label>
+          <ng-container *ngIf="studentForm.get('Password')?.invalid && studentForm.get('Password')?.touched">
+            &nbsp;<span class="error" *ngIf="studentForm.get('Password')?.errors?.['required']">Password is required</span>
+            <span class="error" *ngIf="studentForm.get('Password')?.errors?.['pattern']">Invalid Pattern</span>
+          </ng-container>
+          <input type="password" formControlName="Password" class="form-control" id="txtPassword" name="txtPassword">
+        </div>
+        <div>
+          <label for="re-password">Re-Enter Password</label>
+          <ng-container *ngIf="studentForm.get('Password')?.invalid && studentForm.get('Password')?.touched">
+            &nbsp;<span class="error" *ngIf="studentForm.get('Password')?.errors?.['required']">Password is required</span>
+            <span class="error" *ngIf="studentForm.get('Password')?.errors?.['pattern']">Invalid Pattern</span>
+          </ng-container>
+          <input type="password" class="form-control" id="txtRePassword" name="txtRePassword">
+        </div>
+
+        <div class="text-center">
+          <button class="btn btn-primary mt-3 mb-1 w-100">Register</button>
+            <a class="text-center" routerLink="/login">Already Have An Account Click Here</a>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

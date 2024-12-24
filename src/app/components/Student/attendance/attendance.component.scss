@@ -1,0 +1,103 @@
+.header{
+  font-size: 1.7em;
+}
+.header sub{
+  font-size: 0.6em;
+  color: #807b7b;
+}
+
+
+
+
+/* Basic Styles */
+.calendar {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  width: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Header */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Month Year Display */
+.calendar-header span {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+/* Day Names */
+.calendar-days-of-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 10px;
+}
+
+/* Day Labels */
+.day {
+  font-weight: bold;
+  padding: 5px;
+  text-align: center;
+}
+
+/* Days Grid */
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+/* Day Boxes */
+.day-box {
+  padding: 10px;
+  margin: 2px;
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  text-align: center;
+}
+
+/* Hover Effect */
+.day-box:hover {
+  background-color: #e0e0e0;
+}
+
+.disabled {
+  color: #ccc;
+  background-color: #f0f0f0;
+  pointer-events: none;
+}
+
+.greater {
+
+
+
+  color: white;
+  background-color: rgb(179, 179, 201);
+  pointer-events: none;
+}
+
+.empty {
+  visibility: hidden;
+}
+
+
+.past {
+  color: white;
+  background-color: red;
+  pointer-events: none;
+}
+
+
+.highlighted {
+  color: white !important;
+  background-color: green !important;
+  pointer-events: none !important;
+}

@@ -1,0 +1,52 @@
+
+
+  <div class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+
+    <mat-sidenav-container class="example-sidenav-container"
+                          [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
+      <mat-sidenav class="sidenav" #snav [mode]="mobileQuery.matches ? 'over' : 'side'"
+                  [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" style="width: 16rem;" [opened]="!mobileQuery.matches">
+        <mat-nav-list class="mt-2">
+          <li class="text-center">
+            <h5 class="navbar-brand text-white">Student Dashboard</h5>
+          </li>
+          <li class="px-2">
+            <a class="sidenav-item" mat-list-item routerLink="./frmAttendance"><i class="fa-solid mr-2 fa-circle-plus"></i>Attendance</a>
+          </li>
+
+
+        </mat-nav-list>
+      </mat-sidenav>
+
+      <mat-sidenav-content class="bg-white">
+        <mat-toolbar class="navbar navbar-expand-lg justify-content-between">
+
+          <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+
+          <li class="nav-item dropdown list-unstyled">
+            <a class="nav-link dropdown-toggle py-3" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+              {{student.Name}}
+            </a>
+            <div class="dropdown-menu my-0 py-0" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" routerLink="./frmProfile">Profile</a>
+              <a class="dropdown-item" (click)="logout()" >LogOut</a>
+            </div>
+          </li>
+          <script>
+
+          </script>
+        </mat-toolbar>
+
+        <div class="container-fluid">
+          <router-outlet></router-outlet>
+        </div>
+
+
+
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+  </div>
+
+
+
+

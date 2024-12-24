@@ -1,0 +1,170 @@
+<div class="mt-2">
+  <h1 class="header">Student<sub> (Update, Delete )</sub></h1>
+  <hr classs="my-0">
+  <form [formGroup]="studentForm" (submit)="Save()">
+    <div class="row">
+      <div class="col-md-3">
+        <label for="Name" class="mt-1">Name</label>
+        <ng-container *ngIf="studentForm.get('Name')?.invalid && studentForm.get('Name')?.touched">
+          &nbsp;<span class="error" *ngIf="studentForm.get('Name')?.errors?.['required']">Name is required</span>
+        </ng-container>
+        <input type="text" readonly="true" [(ngModel)]="student.name" formControlName="Name" name="Name" class="form-control" id="Name">
+      </div>
+      <div class="col-md-3">
+        <label for="Contact" readonly="true" class="mt-1">Contact</label>
+        <input type="text" readonly="true" maxlength="10" minlength="10" [(ngModel)]="student.contact" formControlName="Contact" name="Contact" class="form-control" id="Contact">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="Address" class="mt-2">Address</label>
+       <textarea name="Address" readonly="true" [(ngModel)]="student.address" formControlName="Address" class="form-control" id="Address"></textarea>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <label for="Division" class="mt-2">Division</label>
+        <select name="" readonly="true" [(ngModel)]="student.ClassId" formControlName="ClassID" class="form-control select-control" id="">
+
+          <option value="0" selected>Select Division</option>
+          <ng-container *ngFor="let item of classList">
+            <option [value]="item.Id">{{item.name}}</option>
+          </ng-container>
+         </select>
+      </div>
+      <div class="col-md-3">
+        <label for="UserName" class="mt-2">User Name</label>
+        <input type="text" [attr.readonly]="!student.UserName" [(ngModel)]="student.UserName" formControlName="UserName" name="UserName" class="form-control" id="UserName">
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-8 px-3 pt-3 form-check-inline">
+        <input type="checkbox" [(ngModel)]="student.isActive" formControlName="isActive" name="isActive" class="form-check" id="isActive"><span class="form-check-label">&nbsp;&nbsp;Activate Teacher</span>
+
+      </div>
+
+    </div>
+    <div class="form-group mt-3">
+      <button class="btn btn-primary" type="submit">{{btnSubmit}}</button>
+      <button class="btn btn-danger mx-2" type="reset">Clear</button>
+    </div>
+  </form>
+
+
+  <!-- <div class="row mt-3">
+    <div class="col-md-8">
+      <table class="table table-responsive-lg w-100">
+        <tr>
+          <th>Sr.No</th>
+          <th>Name</th>
+          <th>Contact</th>
+          <th>Address</th>
+          <th>Status</th>
+          <th colspan="2">Action</th>
+        </tr>
+        <tr *ngFor="let item of studentList; let i=index">
+          <td>{{i+1}}</td>
+          <td>{{item.Name}}</td>
+          <td>{{item.Contact}}</td>
+          <td>{{item.Address}}</td>
+
+          <td><a class="edit text-primary" (click)="edit(item.Id)">Edit</a></td>
+          <td><a class="delete text-danger" (click)="delete(item.Id)">Delete</a></td>
+        </tr>
+      </table>
+    </div>
+  </div> -->
+
+
+  <div class="row mt-2 justify-content-start">
+    <div class="col-md-3">
+      <div class="form-inline">
+        <mat-label>Filter: &nbsp; </mat-label>
+        <input matInput class="form-control" placeholder="Search Anything" (keyup)="applyFilter()"
+          [(ngModel)]="textFilterValue">
+      </div>
+    </div>
+
+  </div>
+
+  <div  class=" pre-scrollable mdc-tab-scroller" tabindex="0">
+    <div class="my-3">
+
+
+  <table class="mt-4 _mat-animation-noopable" mat-table [dataSource]="dataSource" matSort>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="srNumber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Sr. No </th>
+      <td mat-cell *matCellDef="let row"> {{row.srNumber}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let row"> {{row.name}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Contact">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact </th>
+      <td mat-cell *matCellDef="let row"> {{row.contact}}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="User Name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> User Name </th>
+      <td mat-cell *matCellDef="let row">
+        <ng-container *ngFor="let item of userList">
+          <span *ngIf="row.userId==item.Id">
+            {{item.UserName}}
+          </span>
+        </ng-container>
+        </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="Address">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Address </th>
+      <td mat-cell *matCellDef="let row"> {{row.address}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="Edit">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Edit </th>
+      <td mat-cell *matCellDef="let row"> <a class="text-primary edit" (click)="edit(row.Id)">Edit</a> </td>
+    </ng-container>
+    <ng-container matColumnDef="Delete">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Delete </th>
+      <td mat-cell *matCellDef="let row"> <a class="text-danger delete"  (click)="delete(row.Id)">Delete</a></td>
+    </ng-container>
+
+
+    <!-- View Details Column -->
+    <!-- <ng-container matColumnDef="View">
+      <th mat-header-cell *matHeaderCellDef>
+
+        View Details
+      </th>
+      <td mat-cell *matCellDef="let row">
+
+        <a href="">View</a>
+      </td>
+    </ng-container> -->
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter</td>
+    </tr>
+  </table>
+</div>
+
+  </div>
+  <div class=" table-page justify-content-start">
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
+</div>
