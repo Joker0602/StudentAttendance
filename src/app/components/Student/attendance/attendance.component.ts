@@ -22,6 +22,7 @@ export class AttendanceComponent {
   student:studentModel={ } as studentModel;
   studentList:studentModel[]=[]
   LoggedUser:userModel={} as userModel
+
   monthNames: string[] = [
     'January',
     'February',
@@ -37,6 +38,7 @@ export class AttendanceComponent {
     'December',
   ];
   currentDay: Date = new Date();
+
   constructor(
     private attendanceService:attendanceService,
     private studentService:studentService
@@ -45,34 +47,33 @@ export class AttendanceComponent {
   }
 
   ngOnInit(): void {
+
     this.studentList=this.studentService.showAll();
+
+    //get user by logged user id from local storage
     const userData=localStorage.getItem('LoggedInUser');
     this.LoggedUser=JSON.parse(userData?.toString()!)
 
-
+    //find user by logging id
     this.student=Object(this.studentList.find(x=>x.UserId==this.LoggedUser.Id));
-    console.log(this.student)
+
+    //generate calendar
     this.generateCalendar();
+
+    //Get attendance list by user id
     if(this.student.Id>0){
       this.attendanceList=this.attendanceService.getByStudentId(this.student.Id);
     }
 
-
-
   }
 
+
+  //after view init
   ngAfterViewInit(){
 
     this.attendanceList.forEach((res) => {
       this.presentDates.push(res.date.toString())
     });
-    console.log(this.presentDates)
-    // for(var i=0; i<this.attendanceList.length; i++){
-    //   const dates= this.attendanceList[i].date
-    //   console.log(dates)
-    //   this.presentDates.push(this.attendanceList[i].date)
-    // }
-
 
   }
 
@@ -99,55 +100,35 @@ export class AttendanceComponent {
     }
   }
 
-  // Go to the previous month
+  // previous month
   goToPrevMonth(): void {
     this.currentDate.setMonth(this.currentDate.getMonth() - 1);
     this.generateCalendar();
   }
 
-  // Go to the next month
+  // next month
   goToNextMonth(): void {
     this.currentDate.setMonth(this.currentDate.getMonth() + 1);
     this.generateCalendar();
   }
 
-  // Get the current month's name
+  // current month's name
   getMonthName(): string {
     return this.monthNames[this.currentDate.getMonth()];
   }
 
-  // Get the current year
+  // current year
   getYear(): number {
     return this.currentDate.getFullYear();
   }
 
 
 
-  currentDates(currentDay: any) {
-    return (
-      currentDay.getDate() +
-      '/' +
-      (currentDay.getMonth() + 1) +
-      '/' +
-      currentDay.getFullYear()
-    );
-  }
-
-  selecteCurrentDate(day: any) {
-    return (
-      day +
-      '/' +
-      (this.currentDate.getMonth() + 1).toString() +
-      '/' +
-      this.currentDate.getFullYear().toString()
-    );
-  }
 
 
 
 
-
-  // Function to compare if the date is greater than today
+  // compare if the date is greater than today
   isGreaterThanCurrentDate(day: any,months:any, year:any): boolean {
     const today = new Date();
     const currentDay = new Date(
@@ -160,7 +141,7 @@ export class AttendanceComponent {
     return dateToCompare > currentDay;
   }
 
-  // Function to compare if the date is before today
+  // compare if the date is before today
   isBeforeCurrentDate(day: any,months:any, year:any): boolean {
     const today = new Date();
     const currentDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
@@ -169,26 +150,23 @@ export class AttendanceComponent {
     return dateToCompare < currentDay; // If the date is before today
   }
 
-  // Handle date click event
+  // attendance
   onclickDate(day: any): void {
+    if(confirm("Do You Want To Proceed ?")) {
+      const attendance: attendanceModel = {} as attendanceModel;
+      attendance.Id = this.attendanceService.getMaxId();
+      attendance.date = this.formatDate(day).toString() as any;
+      attendance.status = true;
+      attendance.studentId = this.student.Id;
 
-      if(confirm("Do You Want To Proceed ?")){
-        const attendance:attendanceModel={} as attendanceModel
-        attendance.Id=this.attendanceService.getMaxId();
-        attendance.date= this.formatDate(day).toString() as any;
-        attendance.status=true;
-        attendance.studentId=this.student.Id;
-        console.log(this.student.Id)
-        if(attendance.studentId>0){
-          this.attendanceService.save(attendance)
-
-          alert('Attendance Saved Succefully!')
-          this.generateCalendar();
-          this.ngOnInit();
-        }
-
+      if (attendance.studentId > 0) {
+        this.attendanceService.save(attendance);
+        this.attendanceList.push(attendance); // Add the newly saved attendance to the list
+        this.presentDates.push(attendance.date as any); // Add the date to the presentDates array
+        alert('Attendance Saved Successfully!');
+        this.generateCalendar(); // Regenerate the calendar to reflect changes
       }
-
+    }
   }
 
   // Function to format a date as dd/MM/yyyy

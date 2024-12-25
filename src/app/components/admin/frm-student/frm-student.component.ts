@@ -79,6 +79,7 @@ export class FrmStudentComponent {
       });
       srNumber++;
     });
+
     this.dataSource = new MatTableDataSource(this.tempStudentList);
 
 
@@ -94,6 +95,7 @@ export class FrmStudentComponent {
 
     console.log(this.userList)
     let srNumber = 1;
+    this.tempStudentList=[]
     this.studentList = this.studentService.showAll();
     this.studentList.forEach((res) => {
       this.tempStudentList.push({

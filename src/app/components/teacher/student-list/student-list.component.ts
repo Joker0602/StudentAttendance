@@ -60,9 +60,10 @@ export class StudentListComponent {
     this.attendanceList = this.attendanceService.showAll();
 
     this.studentList.forEach((res) => {
-      for (let i = 0; i < this.attendanceList.length; i++) {
-
-          this.studentAttendanceList.push({
+      for (let i  = 0; i < this.attendanceList.length; i++) {
+        if(res.Id==this.attendanceList[i].studentId)
+          {
+            this.studentAttendanceList.push({
             srNumber: srNumber, // Add the serial number here
             studentId: res.Id.toString(),
             Name: res.Name,
@@ -71,11 +72,11 @@ export class StudentListComponent {
             classId: res.ClassID,
           });
           srNumber++; // Increment the serial number for the next item
-
+        }
       }
     });
     this.classList = this.classService.showAll();
-
+    console.log(this.studentAttendanceList)
     this.dataSource = new MatTableDataSource(this.studentAttendanceList);
   }
   ngOnInit() {
